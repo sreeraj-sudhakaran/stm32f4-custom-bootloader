@@ -1,6 +1,7 @@
 #include<stdint.h>
 
-#define APP_START_ADDRESS 0x08008000U //Starting address of the application in flash memory
+// #define APP_START_ADDRESS 0x08008000U //Starting address of the application in flash memory
+#define APP_START_ADDRESS 0x08004000U
 #define UART_DR_ADDRESS 0x40011004U //Address of the UART data register
 
 void uart_send_string(const char *str)
@@ -20,6 +21,9 @@ void jump_to_application(void)
 
     //set the main stack pointer to the application stack pointer
     __asm volatile("msr msp, %0" : : "r" (app_stack)); // Set the main stack pointer to the application stack pointer
+    
+    //alternative method to set the main stack pointer
+    // __set_MSP(app_stack);  // Set the Main Stack Pointer (MSP)
 
     // Jump to the application reset handler
     ((void (*)(void))app_reset_handler)(); // Call the application reset handler
