@@ -17,11 +17,15 @@ docker-clean:
 build:
 	@echo "Building project inside Docker..."
 	docker run --rm -it -v ${PWD}:/project stm32f4-bootloader-env /bin/bash -c "cd bootloader && make"
+	docker run --rm -it -v ${PWD}:/project stm32f4-bootloader-env /bin/bash -c "cd application && make"
 
 # Clean project build files (inside host)
 clean:
 	@echo "Cleaning build files..."
 	@cd bootloader && make clean
+	@cd application && make clean
 
 # Full rebuild
 rebuild: clean build
+
+
