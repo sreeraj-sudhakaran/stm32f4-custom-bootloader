@@ -12,13 +12,16 @@ BIN = bootloader.bin
 MAP = bootloader.map
 
 #compiler and linker flags
-CFLAGS = -mcpu=cortex-m4 -mthumb -O0 -g -Wall -T linker.ld
+#CFLAGS - things related to CPU, optimization, warnings
+CFLAGS = -mcpu=cortex-m4 -mthumb -O0 -g -Wall
+
+#LDFLAGS - things related to memory layout, linking maps, startup files
 LDFLAGS = -nostartfiles -T linker.ld -Wl,-Map=$(MAP)
 
 all: $(BIN)
 
 #Build ELF file
-$(OUT): $(SRC) linker.ld
+$(OUT): $(SRC)
 	$(CC) $(CFLAGS) $(SRC) -o $(OUT) $(LDFLAGS)
 
 #create BIN file from ELF file

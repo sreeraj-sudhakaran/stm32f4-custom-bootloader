@@ -3,6 +3,16 @@
 #define APP_START_ADDRESS 0x08008000U //Starting address of the application in flash memory
 #define UART_DR_ADDRESS 0x40011004U //Address of the UART data register
 
+void uart_send_string(const char *str)
+{
+    volatile uint32_t *UART_DR = (uint32_t *)UART_DR_ADDRESS; // Pointer to the UART data register
+    while (*str) // Loop until the null terminator is reached
+    {
+        *UART_DR = (uint32_t)(*str); // Send the character to the UART data register
+        str++; // Move to the next character
+    }
+}
+
 void jump_to_application(void)
 {
     uint32_t app_stack = *(volatile uint32_t *)(APP_START_ADDRESS); // Read the application stack pointer from the application address
